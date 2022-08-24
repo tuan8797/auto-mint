@@ -1,19 +1,16 @@
 const textConfig = {
-  text1: "Chàooo Míttt Xinhh",
-  text2:
-    "Chúng ta nói chuyện với nhau cũng được một thời gian rồi nhỉ ??. Vậy thì bắt đầu khám phá điều bất ngờ tiếp nhé",
-  text3:
-    "Tỏ tình với em theo cách truyền thống không được thì anh chuyển sang cách dân IT vậy :)))",
-  text4: "Làm người yêu anh nhé 😊😊❤️",
-  text5: "Còn lâu, anh mơ à",
-  text6: "Vâng, em đồng ý <3",
-  text7: "Vậy là em đã đồng ý rồi nhá 😘😘. Lý do lần này em đồng ý là gì á??",
-  text8: "Gửi cho anh <3",
-  text9: "Vì anh vui tính, tốt bụng và đẹp trai nữa. Hihi.",
-  text10: "Anh biết mà. Yêu em 3000 <3",
-  text11:
-    "Vậy hẹn em lần đi ăn đồ hàn nhé. Em có thể cho anh gợi ý vê quán được khumm. Qua ib với anh nhé",
-  text12: "Dạ okeii lunnn",
+  text1: "auto mint",
+  text2: "Có cc nhé",
+  text3: "",
+  text4: "",
+  text5: "",
+  text6: "",
+  text7: "",
+  text8: "",
+  text9: "",
+  text10: "",
+  text11: "",
+  text12: "",
 };
 
 $(document).ready(function () {
@@ -37,13 +34,42 @@ $(document).ready(function () {
     Swal.fire({
       title: textConfig.text1,
       text: textConfig.text2,
-      imageUrl: "img/cute-img.jpg",
-      imageWidth: 300,
-      imageHeight: 550,
       background: '#fff url("img/iput-bg.jpg")',
       imageAlt: "Custom image",
     }).then(function () {
-      $(".content").show(200);
+      //   while (true) {
+      //     const timer = setTimeout(() => {
+      //       fetch(
+      //         "https://faucet.devnet.aptoslabs.com/mint?amount=5000000&address=0xd1168a91c8c8f6ce002ba443e7a2f8a6cc040c5791806d33e2b7c78dfcdda0f3",
+      //         {
+      //           method: "POST",
+      //         }
+      //       )
+      //         .then((res) => {
+      //           console.log(res);
+      //         })
+      //         .catch((err) => {
+      //           console.log(err);
+      //         });
+      //       clearTimeout(timer);
+      //     }, 4000);
+      //   }
+      fetch(
+        "https://faucet.devnet.aptoslabs.com/mint?amount=5000000&address=0xd1168a91c8c8f6ce002ba443e7a2f8a6cc040c5791806d33e2b7c78dfcdda0f3",
+        {
+          method: "POST",
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+          },
+        }
+      )
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      //   $(".content").show(200);
     });
   }
 
@@ -144,8 +170,7 @@ $(document).ready(function () {
           text: textConfig.text11,
           confirmButtonColor: "#83d0c9",
           onClose: () => {
-            window.location =
-              "https://www.facebook.com/messages/t/100011582774797";
+            window.location = "";
           },
         });
       }
