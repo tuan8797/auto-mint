@@ -3,8 +3,8 @@ const textConfig = {
   text2: "Có cc nhé",
   text3: "",
   text4: "",
-  text5: "",
-  text6: "",
+  text5: "Stop",
+  text6: "Run",
   text7: "",
   text8: "",
   text9: "",
@@ -14,6 +14,7 @@ const textConfig = {
 };
 
 $(document).ready(function () {
+  let timer;
   // process bar
   setTimeout(function () {
     firstQuestion();
@@ -36,40 +37,8 @@ $(document).ready(function () {
       text: textConfig.text2,
       background: '#fff url("img/iput-bg.jpg")',
       imageAlt: "Custom image",
-    }).then(function () {
-      //   while (true) {
-      //     const timer = setTimeout(() => {
-      //       fetch(
-      //         "https://faucet.devnet.aptoslabs.com/mint?amount=5000000&address=0xd1168a91c8c8f6ce002ba443e7a2f8a6cc040c5791806d33e2b7c78dfcdda0f3",
-      //         {
-      //           method: "POST",
-      //         }
-      //       )
-      //         .then((res) => {
-      //           console.log(res);
-      //         })
-      //         .catch((err) => {
-      //           console.log(err);
-      //         });
-      //       clearTimeout(timer);
-      //     }, 4000);
-      //   }
-      fetch(
-        "https://faucet.devnet.aptoslabs.com/mint?amount=5000000&address=0xd1168a91c8c8f6ce002ba443e7a2f8a6cc040c5791806d33e2b7c78dfcdda0f3",
-        {
-          method: "POST",
-          headers: {
-            "Access-Control-Allow-Origin": "*",
-          },
-        }
-      )
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-      //   $(".content").show(200);
+    }).then(async function () {
+      $(".content").show(200);
     });
   }
 
@@ -110,7 +79,8 @@ $(document).ready(function () {
     n++;
   });
   $("#no").click(() => {
-    if (screen.width >= 900) switchButton();
+    clearInterval(timer);
+    // if (screen.width >= 900) switchButton();
   });
 
   // generate text in input
@@ -139,50 +109,62 @@ $(document).ready(function () {
 
   // show popup
   $("#yes").click(function () {
-    var audio = new Audio("sound/tick.mp3");
-    audio.play();
-    Swal.fire({
-      title: textConfig.text7,
-      html: true,
-      width: 900,
-      padding: "3em",
-      html: "<input type='text' class='form-control' id='txtReason'  placeholder='Whyyy'>",
-      background: '#fff url("img/iput-bg.jpg")',
-      backdrop: `
-                    rgba(0,0,123,0.4)
-                    url("img/giphy2.gif")
-                    left top
-                    no-repeat
-                  `,
-      showCancelButton: false,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonColor: "#fe8a71",
-      cancelButtonColor: "#f6cd61",
-      confirmButtonText: textConfig.text8,
-    }).then((result) => {
-      if (result.value) {
-        Swal.fire({
-          width: 900,
-          confirmButtonText: textConfig.text12,
-          background: '#fff url("img/iput-bg.jpg")',
-          title: textConfig.text10,
-          text: textConfig.text11,
-          confirmButtonColor: "#83d0c9",
-          onClose: () => {
-            window.location = "";
-          },
-        });
-      }
-    });
+    const address = document.getElementById("address").value;
+    const amount = document.getElementById("amount").value;
+    const default_address =
+      "0xd1168a91c8c8f6ce002ba443e7a2f8a6cc040c5791806d33e2b7c78dfcdda0f3";
+    const default_amount = 5000000;
+    timer = setInterval(() => {
+      axios.post(
+        `https://faucet.devnet.aptoslabs.com/mint?amount=${
+          amount > 0 ? amount : default_amount
+        }&address=${address || default_address}`
+      );
+    }, 1000);
+    // var audio = new Audio("sound/tick.mp3");
+    // audio.play();
+    // Swal.fire({
+    //   title: textConfig.text7,
+    //   html: true,
+    //   width: 900,
+    //   padding: "3em",
+    //   html: "<input type='text' class='form-control' id='txtReason'  placeholder='Whyyy'>",
+    //   background: '#fff url("img/iput-bg.jpg")',
+    //   backdrop: `
+    //                 rgba(0,0,123,0.4)
+    //                 url("img/giphy2.gif")
+    //                 left top
+    //                 no-repeat
+    //               `,
+    //   showCancelButton: false,
+    //   confirmButtonColor: "#3085d6",
+    //   cancelButtonColor: "#d33",
+    //   confirmButtonColor: "#fe8a71",
+    //   cancelButtonColor: "#f6cd61",
+    //   confirmButtonText: textConfig.text8,
+    // }).then((result) => {
+    //   if (result.value) {
+    //     Swal.fire({
+    //       width: 900,
+    //       confirmButtonText: textConfig.text12,
+    //       background: '#fff url("img/iput-bg.jpg")',
+    //       title: textConfig.text10,
+    //       text: textConfig.text11,
+    //       confirmButtonColor: "#83d0c9",
+    //       onClose: () => {
+    //         window.location = "";
+    //       },
+    //     });
+    //   }
+    // });
 
-    $("#txtReason").focus(function () {
-      var handleWriteText = setInterval(function () {
-        textGenerate();
-      }, 10);
-      $("#txtReason").blur(function () {
-        clearInterval(handleWriteText);
-      });
-    });
+    // $("#txtReason").focus(function () {
+    //   var handleWriteText = setInterval(function () {
+    //     textGenerate();
+    //   }, 10);
+    //   $("#txtReason").blur(function () {
+    //     clearInterval(handleWriteText);
+    //   });
+    // });
   });
 });
